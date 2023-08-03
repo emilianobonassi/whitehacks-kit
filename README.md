@@ -1,66 +1,81 @@
-## Foundry
+# Whitehacks Kit
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+A simple template to perform whitehacks safely in a single tx, leveraging Foundry and Flashbots.
 
-Foundry consists of:
+## Disclaimer
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
-
-## Documentation
-
-https://book.getfoundry.sh/
+Provided AS-IS as educational content only, disclaim any liability for using it.
 
 ## Usage
 
-### Build
+Whitehacks are hard and should be execute by professionals. If you are unsure reach-out [ETHSecurity tg channel](https://t.me/ETHSecurity). Reach-out anyway.
 
-```shell
-$ forge build
+This repo offers a guide to prepare them.
+
+They must be executed in 1 shot and privately, hence one single transaction and the private mempool by Flashbots.
+
+You prepare, you test in a fork, you don't change, you execute.
+
+## Setup
+
+0. Fork the repo
+1. [Install Foundry](https://book.getfoundry.sh/getting-started/installation)
+2. Edit [Whitehack.sol](./src/Whitehack.sol)
+3. Adapt [Whitehack.s.sol](./script/Whitehack.s.sol) 
+
+## Preparation
+
+1. Unset `$RPC_URL`
+
+```zsh
+unset $RPC_URL
 ```
 
-### Test
+2. Check no RPC port open on your computer, if so kill the processes
 
-```shell
-$ forge test
+```zsh
+netstat -an | grep LISTEN | grep 8545
 ```
 
-### Format
+## Test
 
-```shell
-$ forge fmt
+1. Run Anvil fork with 
+
+```zsh
+anvil --fork-url https://eth.llamarpc.com
 ```
 
-### Gas Snapshots
+2. Impersonate your account `0xYOUR_WALLET_ADDRESS` 
 
-```shell
-$ forge snapshot
+```zsh
+cast rpc \
+    anvil_impersonateAccount "0xYOUR_WALLET_ADDRESS" \
+    --rpc-url "http://localhost:8545"
 ```
 
-### Anvil
+3. Run the script
 
-```shell
-$ anvil
+```zsh
+forge script \
+  script/Whitehack.s.sol:WhitehackScript \
+  --rpc-url "http://localhost:8545" \
+  --sender "0xYOUR_WALLET_ADDRESS" \
+  -vvv \
+  --broadcast
 ```
 
-### Deploy
+## Run
 
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
+Do not change your script and contract after the test
+
+```zsh
+forge script \
+  script/Whitehack.s.sol:WhitehackScript \
+  --rpc-url "https://rpc.flashbots.net?hint=hash" \
+  --sender "0xYOUR_WALLET_ADDRESS" \
+  --interactives 1 \
+  -vvv \
+  --broadcast
 ```
 
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+The rpc url is set for [Full Privacy](https://docs.flashbots.net/flashbots-protect/rpc/mev-share#full-privacy) on Flashbots
