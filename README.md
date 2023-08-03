@@ -25,10 +25,10 @@ You prepare, you test in a fork, you don't change, you execute.
 
 ## Preparation
 
-1. Unset `$RPC_URL`
+1. Unset `$ETH_RPC_URL`
 
 ```zsh
-unset $RPC_URL
+unset $ETH_RPC_URL
 ```
 
 2. Check no RPC port open on your computer, if so kill the processes
