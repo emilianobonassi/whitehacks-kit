@@ -8,7 +8,7 @@ Provided AS-IS as educational content only, disclaim any liability for using it.
 
 ## Usage
 
-Whitehacks are hard and should be execute by professionals. If you are unsure reach-out [ETHSecurity tg channel](https://t.me/ETHSecurity). Reach-out anyway.
+Whitehacks are hard and should be execute by professionals. If you are unsure reach-out the [Seal 911 Bot](https://t.me/seal_911_bot). Reach-out anyway.
 
 This repo offers a guide to prepare them.
 
